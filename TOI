@@ -1,0 +1,23 @@
+import java.time.DayOfWeek;
+import java.util.HashMap;
+import java.util.Map;
+
+public class TOI implements SubscriptionItem {
+
+    Map<DayOfWeek, Double> costPerDay = new HashMap<>();
+
+    public TOI() {
+        costPerDay.put(DayOfWeek.MONDAY, 3.0);
+        costPerDay.put(DayOfWeek.TUESDAY, 3.0);
+        costPerDay.put(DayOfWeek.WEDNESDAY, 3.0);
+        costPerDay.put(DayOfWeek.THURSDAY, 3.0);
+        costPerDay.put(DayOfWeek.FRIDAY, 3.0);
+        costPerDay.put(DayOfWeek.SATURDAY, 5.0);
+        costPerDay.put(DayOfWeek.SUNDAY, 6.0);
+    }
+
+    @Override
+    public double getCost(DayOfWeek day) {
+        return costPerDay.get(day);
+    }
+}
