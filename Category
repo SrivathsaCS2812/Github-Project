@@ -1,0 +1,10 @@
+import java.util.List;
+
+public interface Category {
+
+    String getName();
+
+    List<Subscription> getSubscriptions();
+
+    void setSubscription(Subscription subscription);
+}
