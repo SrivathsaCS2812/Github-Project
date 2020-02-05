@@ -1,0 +1,24 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class BooksPeriodicalCategory implements Category {
+
+    private static final String name = "Books & Periodical ";
+
+    private List<Subscription> subscriptions = new ArrayList<>();
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    @Override
+    public void setSubscription(Subscription subscription) {
+        subscriptions.add(subscription);
+    }
+}
