@@ -1,0 +1,5 @@
+import java.time.DayOfWeek;
+
+public interface SubscriptionItem {
+    double getCost(DayOfWeek day);
+}
