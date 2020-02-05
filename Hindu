@@ -1,0 +1,19 @@
+public class Hindu implements SubscriptionItem {
+
+    Map<DayOfWeek, Double> costPerDay = new HashMap<>();
+
+    public Hindu() {
+        costPerDay.put(DayOfWeek.MONDAY, 2.5);
+        costPerDay.put(DayOfWeek.TUESDAY, 2.5);
+        costPerDay.put(DayOfWeek.WEDNESDAY, 2.5);
+        costPerDay.put(DayOfWeek.THURSDAY, 2.5);
+        costPerDay.put(DayOfWeek.FRIDAY, 2.5);
+        costPerDay.put(DayOfWeek.SATURDAY, 4.0);
+        costPerDay.put(DayOfWeek.SUNDAY, 4.0);
+    }
+
+    @Override
+    public double getCost(DayOfWeek day) {
+        return costPerDay.get(day);
+    }
+}
