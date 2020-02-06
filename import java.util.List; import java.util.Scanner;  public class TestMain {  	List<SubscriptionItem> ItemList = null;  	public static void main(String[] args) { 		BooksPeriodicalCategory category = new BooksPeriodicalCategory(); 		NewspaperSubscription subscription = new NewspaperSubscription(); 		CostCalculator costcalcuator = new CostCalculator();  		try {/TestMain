@@ -1,0 +1,40 @@
+
+import java.util.List;
+import java.util.Scanner;
+
+public class TestMain {
+
+	List<SubscriptionItem> ItemList = null;
+
+	public static void main(String[] args) {
+		BooksPeriodicalCategory category = new BooksPeriodicalCategory();
+		NewspaperSubscription subscription = new NewspaperSubscription();
+		CostCalculator costcalcuator = new CostCalculator();
+
+		try {
+			// Insert the subscription from user input separated by comma.
+			Scanner userInputValue = new Scanner(System.in);
+			System.out.println("Enter Subscription in seprated by comma");
+			String userInput = userInputValue.nextLine();
+
+			String[] splitUserInput = userInput.split(",");
+			for (int i = 0; i < splitUserInput.length; i++) {
+				if (splitUserInput[i].equalsIgnoreCase("TOI")) {
+					subscription.setItem(new TOI());
+				} else if (splitUserInput[i].equalsIgnoreCase("Hindu")) {
+					subscription.setItem(new Hindu());
+				}
+			}
+
+			category.setSubscription(subscription);
+			List<SubscriptionItem> ItemList = subscription.getItems();
+			costcalcuator.dailySubscription(ItemList);
+
+		} catch (Exception e) {
+
+			e.getMessage();
+		}
+
+	}
+
+}
