@@ -1,0 +1,141 @@
+import java.time.DayOfWeek;
+import java.time.YearMonth;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class CostCalculator {
+
+	// Calculate Monthly Subscription.
+	public double monthlySubscription(double subscriptionItemCost) {
+		return subscriptionItemCost;
+	}
+
+	// Calculate BiWeekly Subscription.
+	public double biWeeklySubscription(double subscriptionItemCost) {
+		return (2 * subscriptionItemCost);
+	}
+
+	// Calculate BiWeekly Subscription.
+	public double weeklySubscription(double subscriptionItemCost) {
+		return (4 * subscriptionItemCost);
+	}
+
+	// Calculate Daily Subscription.
+	public String getFirstDayOfMonth() {
+		Calendar c = Calendar.getInstance(); // this takes current date
+		c.set(Calendar.DAY_OF_MONTH, 1);
+		Date startDate = c.getTime();
+		String firstDate = startDate.toString();
+		String[] splitFirstDate = firstDate.split(" ");
+		String FirstDates = splitFirstDate[0];
+		return FirstDates;
+	}
+
+	public double dailySubscription(List<SubscriptionItem> ItemList) {
+
+		/*
+		 * Logical explain below to calculate the daily subscription Identify the first
+		 * day of the month and how many days of the month. Dived the total days in
+		 * month by 7 and then based on the reminder increment the week day. For Ex :
+		 * Sat is the starting day of month then add one to Saturday. If it is February
+		 * month, Then total number of week days are four and Saturday increment by one.
+		 */
+
+		double dailyTotalSubscription = 0;
+
+		String FirstDates = getFirstDayOfMonth();
+
+		Calendar calendar = Calendar.getInstance();
+		int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+		int remainderOfMonth = (maxDay % 7);
+
+		Map<String, String> sequenceOrderOfMonth = new HashMap<String, String>();
+
+		sequenceOrderOfMonth.put("Sun", "Mon");
+		sequenceOrderOfMonth.put("Mon", "Tue");
+		sequenceOrderOfMonth.put("Tue", "Thu");
+		sequenceOrderOfMonth.put("Thu", "Fri");
+		sequenceOrderOfMonth.put("Fri", "Sat");
+		sequenceOrderOfMonth.put("Sat", "Sun");
+
+		Map<String, Integer> maximumOccurenceofDay = new HashMap<String, Integer>();
+
+		maximumOccurenceofDay.put("Mon", 4);
+		maximumOccurenceofDay.put("Tue", 4);
+		maximumOccurenceofDay.put("Wed", 4);
+		maximumOccurenceofDay.put("Thu", 4);
+		maximumOccurenceofDay.put("Fri", 4);
+		maximumOccurenceofDay.put("Sat", 4);
+		maximumOccurenceofDay.put("Sun", 4);
+
+		for (int i = 0; i < ItemList.size(); i++) {
+
+			double mondayValue = ItemList.get(i).getCost(DayOfWeek.MONDAY);
+			int mon = maximumOccurenceofDay.get("Mon");
+			double totalMondayValue = (mondayValue * (double) mon);
+			double tuesdayValue = ItemList.get(i).getCost(DayOfWeek.TUESDAY);
+			int tue = maximumOccurenceofDay.get("Tue");
+			double totalTuesdayValue = (tuesdayValue * (double) tue);
+			double addMonTues = Double.sum(totalMondayValue, totalTuesdayValue);
+			double wednesdayValue = ItemList.get(i).getCost(DayOfWeek.WEDNESDAY);
+			int wed = maximumOccurenceofDay.get("Wed");
+			double totalWednesdayValue = (wednesdayValue * (double) wed);
+			double thusdayValue = ItemList.get(i).getCost(DayOfWeek.THURSDAY);
+			int thu = maximumOccurenceofDay.get("Thu");
+			double totalThusdayValue = (thusdayValue * (double) thu);
+			double addWedThu = Double.sum(totalWednesdayValue, totalThusdayValue);
+			double fridayValue = ItemList.get(i).getCost(DayOfWeek.FRIDAY);
+			int fri = maximumOccurenceofDay.get("Fri");
+			double totalFridayValue = (fridayValue * (double) fri);
+			double saturdayValue = ItemList.get(i).getCost(DayOfWeek.SATURDAY);
+			int sat = maximumOccurenceofDay.get("Sat");
+			double totalSaterdayValue = (saturdayValue * (double) sat);
+			double addFriSat = Double.sum(totalFridayValue, totalSaterdayValue);
+			double sundayValue = ItemList.get(i).getCost(DayOfWeek.SUNDAY);
+			int sun = maximumOccurenceofDay.get("Sun");
+			double totalSundayValue = (sundayValue * (double) sun);
+
+			if (remainderOfMonth == 1) {
+				String dayOne = sequenceOrderOfMonth.get(FirstDates);
+				if (maximumOccurenceofDay.containsKey(dayOne)) {
+					int dayIncrement = maximumOccurenceofDay.get(dayOne);
+					dayIncrement = dayIncrement + 1;
+					maximumOccurenceofDay.put(dayOne, dayIncrement);
+					// System.out.println(maximumOccurenceofDay.get(dayOne));
+
+				}
+
+			} else if (remainderOfMonth == 2) {
+				String daytwo = sequenceOrderOfMonth.get(FirstDates);
+				String daythree = sequenceOrderOfMonth.get(daytwo);
+				if (maximumOccurenceofDay.containsKey(daythree)) {
+					int dayIncrement = maximumOccurenceofDay.get(daythree);
+					dayIncrement = dayIncrement + 1;
+					maximumOccurenceofDay.put(daythree, dayIncrement);
+
+				}
+			} else if (remainderOfMonth == 3) {
+				String dayFour = sequenceOrderOfMonth.get(FirstDates);
+				String dayFive = sequenceOrderOfMonth.get(dayFour);
+				String daySix = sequenceOrderOfMonth.get(dayFive);
+				if (maximumOccurenceofDay.containsKey(daySix)) {
+					int dayIncrement = maximumOccurenceofDay.get(daySix);
+					dayIncrement = dayIncrement + 1;
+					maximumOccurenceofDay.put(daySix, dayIncrement);
+
+				}
+			}
+			dailyTotalSubscription = (addMonTues + addWedThu + addFriSat + totalSundayValue);
+			System.out.println("Total DailySubscription Amount" + dailyTotalSubscription);
+		}
+
+		return dailyTotalSubscription;
+
+	}
+
+}
